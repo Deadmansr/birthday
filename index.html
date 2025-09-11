@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday Bubu 🎂</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FFB6C1;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 { margin-top: 20px; }
+        button {
+            padding: 10px 20px;
+            background: #ff4081;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover { background: #ff5c93; }
+
+        #login, #cake-section, #special-photo, #final-display-container {
+            display: none;
+        }
+        #login h1 {
+            color: #ff4081;
+        }
+        #login input, #giftPasswordInput {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Cake */
+        .cake {
+            width: 200px;
+            height: 120px;
+            margin: 120px auto 0;
+            background: #ffb74d;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: -40px; left: 30px;
+            width: 140px; height: 40px;
+            background: #f57c00;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .candle {
+            width: 10px;
+            height: 40px;
+            background: #fff;
+            position: absolute;
+            top: -60px;
+            border-radius: 3px;
+        }
+        .candle:nth-child(1){ left:95px; }
+        .flame {
+            width: 12px; height: 18px;
+            background: radial-gradient(ellipse at center,#ffeb3b 0%,#ff5722 80%);
+            border-radius: 50%;
+            position: absolute;
+            top: -20px; left: -1px;
+            animation: flicker 0.2s infinite alternate;
+        }
+        @keyframes flicker {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* Balloons */
+        .balloons-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .balloon {
+            width: 60px;
+            height: 80px;
+            background-color: #ff69b4;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            bottom: -50px;
+            box-shadow: inset -5px -5px 5px rgba(0,0,0,0.2);
+            animation: floatAndSway 10s ease-in-out infinite;
+        }
+        .balloon::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            width: 2px;
+            height: 30px;
+            background-color: rgba(0,0,0,0.3);
+            transform: translateX(-50%);
+            transform-origin: top;
+            border-radius: 0 0 5px 5px;
+        }
+        .balloon:nth-child(1) {
+            left: calc(50% - 180px);
+            background-color: #ff99e6;
+            animation-delay: 0s;
+            animation-duration: 9s;
+            transform: translateY(0);
+        }
+        .balloon:nth-child(2) {
+            left: calc(50% - 120px);
+            background-color: #ff4081;
+            animation-delay: 2s;
+            animation-duration: 11s;
+            transform: translateY(0);
+        }
+        .balloon:nth-child(3) {
+            left: calc(50% + 80px);
+            background-color: #ff99e6;
+            animation-delay: 4s;
+            animation-duration: 10s;
+            transform: translateY(0);
+        }
+         .balloon:nth-child(4) {
+            left: calc(50% + 140px);
+            background-color: #ff4081;
+            animation-delay: 1s;
+            animation-duration: 12s;
+            transform: translateY(0);
+        }
+        @keyframes floatAndSway {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.8; }
+            25% { transform: translateY(-20vh) translateX(10px) rotate(5deg); }
+            50% { transform: translateY(-40vh) translateX(-10px) rotate(-5deg); opacity: 1; }
+            75% { transform: translateY(-60vh) translateX(10px) rotate(5deg); }
+            100% { transform: translateY(-80vh) translateX(-10px) rotate(-5deg); opacity: 0.8; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px; height: 10px;
+            top: -10px;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(720deg); }
+        }
+
+        /* Special Photo and Message */
+        #special-photo {
+            position: relative;
+            max-width: 80%;
+            margin: 30px auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+        #special-photo img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+        }
+        #special-message {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 0 0 12px 12px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.5;
+            animation: fadeIn 2s ease-in-out forwards;
+            z-index: 10;
+        }
+        .pop-up-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 30%;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            animation: popUp 1.5s forwards;
+            animation-delay: 2s;
+            z-index: 3;
+        }
+        @keyframes popUp {
+            from { transform: translate(-50%, -50%) scale(0); }
+            to { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Gift Wrapper Styles */
+        #final-photo {
+            display: none;
+            max-width: 80%;
+            margin: 30px auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        #final-photo img {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+        .gift-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 80%;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            height: 400px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+            border-radius: 12px;
+        }
+        .gift-wrapper h1 {
+            color: #fff;
+            position: absolute;
+            top: 20%;
+            z-index: 3;
+        }
+        .gift-wrapper input, .gift-wrapper button {
+            z-index: 3;
+        }
+        .gift-top, .gift-bottom {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: #e74c3c;
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            z-index: 2;
+        }
+        .gift-top { top: 0; border-bottom: 5px solid #c0392b; }
+        .gift-bottom { bottom: 0; border-top: 5px solid #c0392b; }
+        .unwrap-top { animation: unwrapTop 2s forwards; }
+        .unwrap-bottom { animation: unwrapBottom 2s forwards; }
+        @keyframes unwrapTop { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+        @keyframes unwrapBottom { from { transform: translateY(0); } to { transform: translateY(100%); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* Final message styles */
+        #final-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            padding: 20px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            line-height: 1.5;
+            display: none;
+            width: 80%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login">
+        <h1>Who are you?</h1>
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="verifyUser()">Submit</button>
+    </div>
+
+    <div id="cake-section">
+        <h1>🎉 Happy Birthday Bubu 🎉</h1>
+        <div class="cake">
+            <div class="candle"><div class="flame"></div></div>
+        </div>
+        <div class="balloons-container">
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+        </div>
+    </div>
+
+    <div id="special-photo">
+        <img src="C:\Users\sreem\OneDrive\Desktop\WhatsApp Image 2025-09-12 at 01.49.52_f7cf7d14.jpg" alt="Special Photo">
+        <img src="C:\Users\sreem\OneDrive\Desktop\Gemini_Generated_Image_cp8gcacp8gcacp8g.png" alt="Pop Up Image" class="pop-up-image">
+        <div id="special-message">
+            Hey dear this is your babu. He wants to wish you a very very happy birthday and a very happy life he wants only you to see successful in your life he promises you that he will never leave you alone and always stay with you if you came to this much then you will be always with him and he will always protect you dont be emotional after reading this message and just call him and tell him hey I love you
+        </div>
+    </div>
+
+    <div id="final-display-container">
+        <div class="gift-wrapper" id="giftWrapper">
+            <h1>It's your final gift</h1>
+            <input type="password" id="giftPasswordInput" placeholder="Enter password">
+            <button onclick="unwrapGift()">Unwrap</button>
+            <div class="gift-top" id="giftTop"></div>
+            <div class="gift-bottom" id="giftBottom"></div>
+            <div id="final-photo">
+                <img src="C:\Users\sreem\OneDrive\Desktop\WhatsApp Image 2025-09-12 at 04.39.26_6f152da4.jpg" alt="Final Picture">
+            </div>
+            <div id="final-message">
+                Happy Birthday! <br><br> Hope you enjoy this final surprise from babu. He loves you very much!
+            </div>
+        </div>
+        <audio id="song" loop>
+            <source src="C:\Users\sreem\OneDrive\Desktop\happy-birthday-266285.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+<script>
+    document.getElementById("login").style.display="block";
+
+    function verifyUser() {
+        const pass = document.getElementById("password").value.trim().toLowerCase();
+        if(pass === "bubu"){
+            document.getElementById("login").style.display="none";
+            document.getElementById("cake-section").style.display="block";
+
+            const song = document.getElementById("song");
+            song.currentTime = 0;
+            song.play().catch(()=>{ console.log("Autoplay blocked"); });
+            
+            let confettiInterval = setInterval(createConfetti, 200);
+            
+            setTimeout(()=>{
+                clearInterval(confettiInterval);
+                document.getElementById("cake-section").style.display="none";
+                document.getElementById("special-photo").style.display="block";
+                setTimeout(()=>{
+                    document.getElementById("special-photo").style.display="none";
+                    document.getElementById("final-display-container").style.display = "flex";
+                }, 11000);
+            }, 4000);
+        } else {
+            alert("Wrong password ❌");
+        }
+    }
+
+    function unwrapGift() {
+        const giftPass = document.getElementById("giftPasswordInput").value.trim().toLowerCase();
+        if (giftPass === "i love you babu") {
+            const giftTop = document.getElementById("giftTop");
+            const giftBottom = document.getElementById("giftBottom");
+            const finalPhoto = document.getElementById("final-photo");
+            const finalMessage = document.getElementById("final-message");
+            
+            giftTop.classList.add("unwrap-top");
+            giftBottom.classList.add("unwrap-bottom");
+            
+            setTimeout(() => {
+                giftTop.style.display = "none";
+                giftBottom.style.display = "none";
+                finalPhoto.style.display = "block";
+                finalMessage.style.display = "block";
+            }, 2000);
+
+            document.querySelector("#giftWrapper h1").style.display = "none";
+            document.getElementById("giftPasswordInput").style.display = "none";
+            document.querySelector("#giftWrapper button").style.display = "none";
+
+        } else {
+            alert("Wrong password ❌");
+        }
+    }
+
+    function createConfetti() {
+        const confetti = document.createElement("div");
+        confetti.className="confetti";
+        const colors=["#ff4d6d","#4dd2ff","#ffea00","#81ff4d","#c94dff","#ffffff"];
+        confetti.style.background=colors[Math.floor(Math.random()*colors.length)];
+        confetti.style.left=Math.random()*window.innerWidth+"px";
+        confetti.style.animationDuration=(3+Math.random()*3)+"s";
+        document.body.appendChild(confetti);
+        setTimeout(()=>confetti.remove(),4000);
+    }
+</script>
+</body>
+</html>
